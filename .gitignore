@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+.npm/
+
+# Production Builds
+dist/
+client/dist/
+server/dist/
+
+# Environment Variables & Sensitive Secrets
+.env
+.env.*
+server/.env
+server/.env.*
+!server/.env.example
+
+# SQLite Database & Storage
+*.db
+*.sqlite
+*.db-journal
+server/*.db
+server/*.db-journal
+
+# Uploads & Generated User Files
+server/uploads/generated/*
+!server/uploads/generated/.gitkeep
+server/uploads/photos/*
+!server/uploads/photos/.gitkeep
+
+# Keep Official Template Assets
+!server/uploads/templates/vlbvn_logo.jpg
+!server/uploads/templates/vlbvn_light_template.png
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Editor & OS Files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
