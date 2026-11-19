@@ -6,7 +6,6 @@ node_modules/
 # Production Builds
 dist/
 client/dist/
-server/dist/
 
 # Environment Variables & Sensitive Secrets
 .env

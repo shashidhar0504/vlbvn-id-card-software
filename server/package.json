@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "tsx src/index.ts",
+    "build": "tsc && node -e \"const fs=require('fs'); fs.mkdirSync('dist/db', {recursive:true}); fs.copyFileSync('src/db/schema.sql', 'dist/db/schema.sql');\"",
+    "start": "node dist/index.js",
     "test:flow": "tsx src/test-flow.ts"
   },
   "dependencies": {
