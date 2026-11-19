@@ -124,4 +124,9 @@ if (!process.env.VERCEL) {
   startServer();
 }
 
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = app;
+  (module.exports as any).default = app;
+}
+
 export default app;

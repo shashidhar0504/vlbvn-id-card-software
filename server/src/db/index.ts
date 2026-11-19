@@ -1,21 +1,23 @@
 import { DatabaseSync } from 'node:sqlite';
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import bcrypt from 'bcryptjs';
 import { ensureDefaultTemplateFile } from '../services/templateGenerator.js';
 
 const isVercel = !!process.env.VERCEL;
 const dbPath = isVercel
-  ? path.join('/tmp', 'vlpn.db')
+  ? path.join(os.tmpdir(), 'vlpn.db')
   : path.resolve(process.cwd(), 'vlpn.db');
 export const db = new DatabaseSync(dbPath);
 
 export async function initDatabase() {
   const candidateSchemaPaths = [
     path.resolve(process.cwd(), 'src', 'db', 'schema.sql'),
+    path.resolve(process.cwd(), 'dist', 'db', 'schema.sql'),
     path.resolve(process.cwd(), 'schema.sql'),
-    path.resolve(path.dirname(new URL(import.meta.url).pathname), 'schema.sql'),
-    path.resolve(process.cwd(), 'server', 'src', 'db', 'schema.sql')
+    path.resolve(process.cwd(), 'server', 'src', 'db', 'schema.sql'),
+    path.resolve(process.cwd(), 'server', 'dist', 'db', 'schema.sql')
   ];
   const schemaPath = candidateSchemaPaths.find(p => fs.existsSync(p)) || candidateSchemaPaths[0];
   const schema = fs.readFileSync(schemaPath, 'utf8');

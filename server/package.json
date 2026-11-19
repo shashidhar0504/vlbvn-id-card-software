@@ -2,8 +2,7 @@
   "name": "vlpn-server",
   "version": "1.0.0",
   "description": "VLPN Community Digital Membership & ID Card Management System API",
-  "main": "src/index.ts",
-  "type": "module",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
