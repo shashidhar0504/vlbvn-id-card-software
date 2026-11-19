@@ -8,8 +8,6 @@
     "server": {
       "root": "server",
       "framework": "express",
-      "entrypoint": "dist/index.js",
-      "buildCommand": "pnpm run build",
       "bindings": [
         {
           "type": "service",
