@@ -9,8 +9,7 @@
       "root": "server",
       "framework": "express",
       "entrypoint": "dist/index.js",
-      "installCommand": "npm install",
-      "buildCommand": "npm run build",
+      "buildCommand": "pnpm run build",
       "bindings": [
         {
           "type": "service",
