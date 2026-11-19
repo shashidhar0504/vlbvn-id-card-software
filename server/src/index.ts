@@ -27,8 +27,30 @@ app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 if (!fs.existsSync(GENERATED_DIR)) fs.mkdirSync(GENERATED_DIR, { recursive: true });
 
-// Static assets for uploads
+// Static assets for uploads (dynamic /tmp/uploads + repo static template fallback)
 app.use('/uploads', express.static(UPLOAD_DIR));
+const staticUploadsFallback = path.resolve(process.cwd(), 'uploads');
+if (staticUploadsFallback !== UPLOAD_DIR && fs.existsSync(staticUploadsFallback)) {
+  app.use('/uploads', express.static(staticUploadsFallback));
+}
+
+// Lazy database initialization for Vercel Serverless environment
+let dbInitPromise: Promise<void> | null = null;
+async function ensureDbInit() {
+  if (!dbInitPromise) {
+    dbInitPromise = initDatabase();
+  }
+  return dbInitPromise;
+}
+
+app.use(async (_req, _res, next) => {
+  try {
+    await ensureDbInit();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 // Download direct helper route (forces browser download with clean filename)
 app.get('/api/download/card/:format/:id', (req, res) => {
@@ -84,10 +106,10 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
 
 async function startServer() {
   try {
-    await initDatabase();
+    await ensureDbInit();
     app.listen(PORT, () => {
       console.log(`====================================================`);
-      console.log(`  VLPN Membership System running on http://localhost:${PORT}`);
+      console.log(`  VLBVN Membership System running on http://localhost:${PORT}`);
       console.log(`  Uploads directory: ${UPLOAD_DIR}`);
       console.log(`====================================================`);
     });
@@ -97,4 +119,9 @@ async function startServer() {
   }
 }
 
-startServer();
+// In local environment, start HTTP server directly; on Vercel, app is exported as serverless handler
+if (!process.env.VERCEL) {
+  startServer();
+}
+
+export default app;

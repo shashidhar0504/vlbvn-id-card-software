@@ -74,7 +74,14 @@ export async function ensureDefaultTemplateFile(): Promise<string> {
   ctx.fillRect(24, 24, width - 48, 5);
 
   // 5. Draw EXACT Official Logo Image
-  const logoPath = path.join(TEMPLATES_DIR, 'vlbvn_logo.jpg');
+  const candidateLogos = [
+    path.join(TEMPLATES_DIR, 'vlbvn_logo.jpg'),
+    path.resolve(process.cwd(), 'uploads', 'templates', 'vlbvn_logo.jpg'),
+    path.resolve(process.cwd(), 'server', 'uploads', 'templates', 'vlbvn_logo.jpg'),
+    path.resolve(process.cwd(), 'client', 'public', 'vlbvn_logo.jpg'),
+    path.resolve(process.cwd(), '..', 'client', 'public', 'vlbvn_logo.jpg')
+  ];
+  const logoPath = candidateLogos.find(p => fs.existsSync(p)) || candidateLogos[0];
   if (fs.existsSync(logoPath)) {
     try {
       const logoImg = await loadImage(logoPath);
