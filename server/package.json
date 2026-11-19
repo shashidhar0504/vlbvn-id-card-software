@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc && node -e \"const fs=require('fs'); fs.mkdirSync('dist/db', {recursive:true}); fs.copyFileSync('src/db/schema.sql', 'dist/db/schema.sql');\"",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.js --external:@napi-rs/canvas --external:node:sqlite && node -e \"const fs=require('fs'); fs.mkdirSync('dist/db', {recursive:true}); fs.copyFileSync('src/db/schema.sql', 'dist/db/schema.sql');\"",
     "start": "node dist/index.js",
     "test:flow": "tsx src/test-flow.ts"
   },
@@ -32,6 +32,7 @@
     "@types/nodemailer": "^6.4.17",
     "@types/pdfkit": "^0.13.9",
     "@types/qrcode": "^1.5.5",
+    "esbuild": "^0.28.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3"
   }

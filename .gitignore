@@ -4,8 +4,8 @@ node_modules/
 .npm/
 
 # Production Builds
-dist/
 client/dist/
+!server/dist/
 
 # Environment Variables & Sensitive Secrets
 .env
