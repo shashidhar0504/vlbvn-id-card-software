@@ -108,6 +108,9 @@ importers:
       dotenv:
         specifier: ^16.4.7
         version: 16.6.1
+      esbuild:
+        specifier: ^0.28.2
+        version: 0.28.2
       express:
         specifier: ^4.21.2
         version: 4.22.3
@@ -157,9 +160,6 @@ importers:
       '@types/qrcode':
         specifier: ^1.5.5
         version: 1.5.6
-      esbuild:
-        specifier: ^0.28.2
-        version: 0.28.2
       tsx:
         specifier: ^4.19.2
         version: 4.23.15
