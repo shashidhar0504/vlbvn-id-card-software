@@ -13,32 +13,16 @@
           "dest": "/index.html"
         }
       ]
-    },
-    "server": {
-      "root": "server",
-      "framework": "express",
-      "bindings": [
-        {
-          "type": "service",
-          "service": "client",
-          "format": "url",
-          "env": "CLIENT_URL"
-        }
-      ]
     }
   },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": {
-        "service": "server"
-      }
+      "destination": "https://vlbvn-backend.onrender.com/api/$1"
     },
     {
       "source": "/uploads/(.*)",
-      "destination": {
-        "service": "server"
-      }
+      "destination": "https://vlbvn-backend.onrender.com/uploads/$1"
     },
     {
       "source": "/(.*)",
